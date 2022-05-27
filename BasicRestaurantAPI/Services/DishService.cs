@@ -32,11 +32,10 @@ namespace BasicRestaurantAPI.Services
             return dishes;
         }
 
-        public Dish GetById(int restaurantId, int dishId)
+        public Dish GetById(int dishId)
         {
-            var dish = _restaurantDbContext.Dishes.Where(d => d.RestaurantId == restaurantId)
-                                                         .Where(d => d.Id == dishId)
-                                                         .FirstOrDefault();
+            var dish = _restaurantDbContext.Dishes.FirstOrDefault(d=>d.Id == dishId);
+
             if (dish is null)
             {
                 throw new NotFoundException("Restaurant or dish not found");

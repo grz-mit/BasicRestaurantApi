@@ -27,10 +27,10 @@ namespace BasicRestaurantAPI.Controllers
         }
 
         [HttpGet]
-        [Route("{restaurantId}/dish/{dishId}")]
-        public ActionResult GetAll([FromRoute] int restaurantId, [FromRoute] int dishId)
+        [Route("dish/{dishId}")]
+        public ActionResult GetById([FromRoute] int dishId)
         {
-            var result = _dishService.GetById(restaurantId,dishId);
+            var result = _dishService.GetById(dishId);
            
             return Ok(result);
         }
