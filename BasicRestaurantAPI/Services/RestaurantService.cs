@@ -3,6 +3,7 @@ using BasicRestaurantAPI.Authorization;
 using BasicRestaurantAPI.DTO;
 using BasicRestaurantAPI.Entities;
 using BasicRestaurantAPI.Exceptions;
+using BasicRestaurantAPI.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -36,14 +37,14 @@ namespace BasicRestaurantAPI.Services
 
             if (restaurant is null)
             {
-                throw new NotFoundException("Restaurant not found");
+                throw new NotFoundException(Messages.RestaurantNotFound);
             }
 
             var result = _authorizationService.AuthorizeAsync(_userContextService.User, restaurant, new AccessRequirement(ActionOperation.Update)).Result;
 
             if (!result.Succeeded)
             {
-                throw new ForbidException("You have no access to this action");
+                throw new ForbidException(Messages.Forbidden);
             }
 
             restaurant = _mapper.Map<EditRestaurantDto,Restaurant>(editRestaurantDto,restaurant);
@@ -66,7 +67,7 @@ namespace BasicRestaurantAPI.Services
             }
             else
             {
-                throw new ForbidException("You have no access to this action");
+                throw new ForbidException(Messages.Forbidden);
             }
         }
 
@@ -89,7 +90,7 @@ namespace BasicRestaurantAPI.Services
 
             if (restaurant is null)
             {
-                throw new NotFoundException("Restaurant not found");
+                throw new NotFoundException(Messages.RestaurantNotFound);
             }
 
             return _mapper.Map<RestaurantDto>(restaurant);
@@ -103,14 +104,14 @@ namespace BasicRestaurantAPI.Services
             
             if (restaurantToDelete is null)
             {
-                throw new NotFoundException("Restaurant not found");
+                throw new NotFoundException(Messages.RestaurantNotFound);
             }
 
             var result = _authorizationService.AuthorizeAsync(_userContextService.User, restaurantToDelete, new AccessRequirement(ActionOperation.Delete)).Result;
 
             if (!result.Succeeded)
             {
-                throw new ForbidException("You have no access to this action");
+                throw new ForbidException(Messages.Forbidden);
             }
             
             _restaurantDbContext.Restaurants.Remove(restaurantToDelete);

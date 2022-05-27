@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using BasicRestaurantAPI.Exceptions;
 using AutoMapper;
+using BasicRestaurantAPI.Helpers;
 
 namespace BasicRestaurantAPI.Services
 {
@@ -26,7 +27,7 @@ namespace BasicRestaurantAPI.Services
 
             if (dishes is null)
             {
-                throw new NotFoundException("Restaurant or dish not found");
+                throw new NotFoundException(Messages.DishNotFound);
             }
 
             return dishes;
@@ -38,7 +39,7 @@ namespace BasicRestaurantAPI.Services
 
             if (dish is null)
             {
-                throw new NotFoundException("Restaurant or dish not found");
+                throw new NotFoundException(Messages.DishNotFound);
             }
 
             return dish;
@@ -50,7 +51,7 @@ namespace BasicRestaurantAPI.Services
 
             if (dishes is null)
             {
-                throw new NotFoundException("Restaurant or dish not found");
+                throw new NotFoundException(Messages.DishNotFound);
             }
 
             _restaurantDbContext.Remove(dishes);
@@ -64,7 +65,7 @@ namespace BasicRestaurantAPI.Services
 
             if (restaurant is null)
             {
-                throw new NotFoundException("Restaurant or dish not found");
+                throw new NotFoundException(Messages.RestaurantNotFound);
             }
 
             restaurant.Dishes.Add(_mapper.Map<Dish>(createDishDto));

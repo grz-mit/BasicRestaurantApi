@@ -2,6 +2,7 @@
 using BasicRestaurantAPI.DTO;
 using BasicRestaurantAPI.Entities;
 using BasicRestaurantAPI.Exceptions;
+using BasicRestaurantAPI.Helpers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -47,14 +48,14 @@ namespace BasicRestaurantAPI.Services
                                     
             if(user == null)
             {
-                throw new BadRequestException("Invalid username or password");
+                throw new BadRequestException(Messages.InvalidLoginOrPassword);
             }
 
             var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, loginDto.Password);
 
             if(result == PasswordVerificationResult.Failed)
             {
-                throw new BadImageFormatException("Invalid username or password");
+                throw new BadRequestException(Messages.InvalidLoginOrPassword);
             }
 
             var claims = new List<Claim>()
